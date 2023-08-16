@@ -33,7 +33,7 @@ func (key *PrivateKey) Decrypt(rand io.Reader, msg []byte, opts crypto.Decrypter
 
 func keyDerivation(Z []byte, klen int) []byte {
 	var ct = 1
-	if klen%8 != 0 {
+	if klen%8 != 0 { // klen is bits length, should be multiple of 8
 		return nil
 	}
 
@@ -73,6 +73,9 @@ func Encrypt(rand io.Reader, key *PublicKey, msg []byte) (cipher []byte, err err
 
 // 好像这个函数有问题，会出现死循环错误
 func doEncrypt(rand io.Reader, key *PublicKey, msg []byte) (x, y *big.Int, c2, c3 []byte, err error) {
+	if len(msg) == 0 {
+		return nil, nil, nil, nil, EncryptionErr
+	}
 	k := generateRandK(rand, key.Curve)
 	genNum := 0
 
