@@ -13,7 +13,7 @@ import (
 	"crypto/sha512"
 	"errors"
 	"fmt"
-	"github.com/Hyperledger-TWGC/ccs-gm/sm3"
+	"github.com/anazh/ccs-gm/sm3"
 	"hash"
 )
 

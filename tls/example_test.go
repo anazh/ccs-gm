@@ -5,8 +5,8 @@
 package tls_test
 
 import (
-	"github.com/Hyperledger-TWGC/ccs-gm/tls"
-	"github.com/Hyperledger-TWGC/ccs-gm/x509"
+	"github.com/anazh/ccs-gm/tls"
+	"github.com/anazh/ccs-gm/x509"
 	"log"
 )
 

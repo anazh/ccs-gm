@@ -11,10 +11,10 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"github.com/Hyperledger-TWGC/ccs-gm/sm2"
-	"github.com/Hyperledger-TWGC/ccs-gm/sm3"
-	"github.com/Hyperledger-TWGC/ccs-gm/sm4"
-	"github.com/Hyperledger-TWGC/ccs-gm/x509"
+	"github.com/anazh/ccs-gm/sm2"
+	"github.com/anazh/ccs-gm/sm3"
+	"github.com/anazh/ccs-gm/sm4"
+	"github.com/anazh/ccs-gm/x509"
 	"io/ioutil"
 	"strings"
 	"sync"
@@ -142,7 +142,7 @@ func macSM3(version uint16, key []byte) macFunction {
 	return tls10MAC{hmac.New(newConstantTimeHash(sm3.New), key)}
 }
 
-//used for adapt the demand of finishHash write
+// used for adapt the demand of finishHash write
 type nilMD5Hash struct{}
 
 func (nilMD5Hash) Write(p []byte) (n int, err error) {
@@ -392,7 +392,7 @@ func GMX509KeyPairs(certPEMBlock, keyPEMBlock, encCertPEMBlock, encKeyPEMBlock [
 	return certificate, nil
 }
 
-//one cert for enc and sign
+// one cert for enc and sign
 func GMX509KeyPairsSingle(certPEMBlock, keyPEMBlock []byte) (Certificate, error) {
 	fail := func(err error) (Certificate, error) { return Certificate{}, err }
 

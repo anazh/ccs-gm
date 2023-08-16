@@ -11,7 +11,7 @@ import (
 	"crypto/rsa"
 	"crypto/sha1"
 	"errors"
-	"github.com/Hyperledger-TWGC/ccs-gm/x509"
+	"github.com/anazh/ccs-gm/x509"
 	"io"
 	"math/big"
 

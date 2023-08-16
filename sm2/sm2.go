@@ -11,7 +11,7 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/Hyperledger-TWGC/ccs-gm/sm3"
+	"github.com/anazh/ccs-gm/sm3"
 )
 
 type PublicKey struct {
@@ -28,7 +28,7 @@ type PrivateKey struct {
 
 var generateRandK = _generateRandK
 
-//optMethod includes some optimized methods.
+// optMethod includes some optimized methods.
 type optMethod interface {
 	// CombinedMult implements fast multiplication S1*g + S2*p (g - generator, p - arbitrary point)
 	CombinedMult(Precomputed *[37][64 * 8]uint64, baseScalar, scalar []byte) (x, y *big.Int)
@@ -128,7 +128,7 @@ func getZById(pub *PublicKey, id []byte) []byte {
 	return hash
 }
 
-//Za = sm3(ENTL||IDa||a||b||Gx||Gy||Xa||Xy)
+// Za = sm3(ENTL||IDa||a||b||Gx||Gy||Xa||Xy)
 func getZ(pub *PublicKey) []byte {
 	return getZById(pub, []byte("1234567812345678"))
 }

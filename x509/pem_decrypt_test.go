@@ -6,7 +6,7 @@ import (
 	"encoding/base64"
 	"testing"
 
-	"github.com/Hyperledger-TWGC/ccs-gm/sm2"
+	"github.com/anazh/ccs-gm/sm2"
 )
 
 func TestEncAndDecPem(t *testing.T) {

@@ -1,7 +1,7 @@
 # ccs-gm
 go语言国密密码库，实现了数据签名/验签、数据哈希、对称加密、非对称加密、x509证书管理、以及国密tls通信的功能。
 
-![Go](https://github.com/Hyperledger-TWGC/ccs-gm/workflows/Go/badge.svg?branch=master)
+![Go](https://github.com/anazh/ccs-gm/workflows/Go/badge.svg?branch=master)
 [![Build Status](https://dev.azure.com/Hyperledger/TWGC/_apis/build/status/Hyperledger-TWGC.ccs-gm?branchName=master)](https://dev.azure.com/Hyperledger/TWGC/_build/latest?definitionId=126&branchName=master)
 
 ## License

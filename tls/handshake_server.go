@@ -11,7 +11,7 @@ import (
 	"crypto/subtle"
 	"errors"
 	"fmt"
-	"github.com/Hyperledger-TWGC/ccs-gm/x509"
+	"github.com/anazh/ccs-gm/x509"
 	"io"
 	"sync/atomic"
 )

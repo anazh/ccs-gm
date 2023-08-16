@@ -14,7 +14,7 @@ import (
 	"math"
 	"math/big"
 
-	"github.com/Hyperledger-TWGC/ccs-gm/sm3"
+	"github.com/anazh/ccs-gm/sm3"
 )
 
 var EncryptionErr = errors.New("sm2: encryption error")
