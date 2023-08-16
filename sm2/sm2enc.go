@@ -73,7 +73,7 @@ func Encrypt(rand io.Reader, key *PublicKey, msg []byte) (cipher []byte, err err
 
 // 好像这个函数有问题，会出现死循环错误
 func doEncrypt(rand io.Reader, key *PublicKey, msg []byte) (x, y *big.Int, c2, c3 []byte, err error) {
-	if len(msg) == 0 {
+	if len(msg) == 0 { // 空消息
 		return nil, nil, nil, nil, EncryptionErr
 	}
 	k := generateRandK(rand, key.Curve)
