@@ -71,17 +71,23 @@ func Encrypt(rand io.Reader, key *PublicKey, msg []byte) (cipher []byte, err err
 	return
 }
 
+// 好像这个函数有问题，会出现死循环错误
 func doEncrypt(rand io.Reader, key *PublicKey, msg []byte) (x, y *big.Int, c2, c3 []byte, err error) {
 	k := generateRandK(rand, key.Curve)
+	genNum := 0
 
 regen:
+	genNum++
+	if genNum > 1000 {
+		return nil, nil, nil, nil, EncryptionErr
+	}
 	x1, y1 := key.Curve.ScalarBaseMult(k.Bytes())
 
 	var x2, y2 *big.Int
 	if opt, ok := key.Curve.(optMethod); ok && (key.PreComputed != nil) {
 		x2, y2 = opt.PreScalarMult(key.PreComputed, k.Bytes())
 	} else {
-		x2, y2 = key.Curve.ScalarMult(key.X, key.Y, k.Bytes())
+		x2, y2 = key.Curve.ScalarMult(key.X, key.Y, k.Bytes()) // 这里会有一定的概率出现错误
 	}
 
 	xBuf := x2.Bytes()
@@ -110,7 +116,7 @@ regen:
 		if v != 0 {
 			break
 		}
-		if i == len(t)-1 {
+		if i == len(t)-1 { // t的最后一位都是0，重新生成k
 			goto regen
 		}
 	}
@@ -186,7 +192,7 @@ func Decrypt(c []byte, key *PrivateKey) ([]byte, error) {
 	return t, nil
 }
 
-//uncompressed form, s=04||x||y
+// uncompressed form, s=04||x||y
 func pointToBytes(x, y *big.Int) []byte {
 	buf := []byte{}
 
@@ -222,26 +228,26 @@ func pointFromBytes(buf []byte) (x, y *big.Int) {
 	return
 }
 
-func EncryptAsn1(rand io.Reader, key *PublicKey, msg []byte) (cipher []byte,err error) {
+func EncryptAsn1(rand io.Reader, key *PublicKey, msg []byte) (cipher []byte, err error) {
 	x, y, c2, c3, err := doEncrypt(rand, key, msg)
 	if err != nil {
 		return nil, err
 	}
 
-	var C = sm2Cipher{x,y,c3,c2}
+	var C = sm2Cipher{x, y, c3, c2}
 
 	return asn1.Marshal(C)
 }
 
-func DecryptAsn1(priv *PrivateKey,cipher []byte) (plaintext []byte,err error) {
+func DecryptAsn1(priv *PrivateKey, cipher []byte) (plaintext []byte, err error) {
 	var C sm2Cipher
 
-	_, err = asn1.Unmarshal(cipher,&C)
+	_, err = asn1.Unmarshal(cipher, &C)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 
-	x1, y1 := C.XCoordinate,C.YCoordinate
+	x1, y1 := C.XCoordinate, C.YCoordinate
 
 	//dB*C1
 	x2, y2 := priv.Curve.ScalarMult(x1, y1, priv.D.Bytes())
