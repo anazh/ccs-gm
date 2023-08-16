@@ -78,7 +78,7 @@ func doEncrypt(rand io.Reader, key *PublicKey, msg []byte) (x, y *big.Int, c2, c
 
 regen:
 	genNum++
-	if genNum > 1000 {
+	if genNum > 100 {
 		return nil, nil, nil, nil, EncryptionErr
 	}
 	x1, y1 := key.Curve.ScalarBaseMult(k.Bytes())
